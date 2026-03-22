@@ -1,0 +1,17 @@
+{
+    "geode": "5.4.1",
+    "gd": {
+        "win": "2.2081",
+        "android": "2.2081",
+        "mac": "2.2081",
+        "ios": "2.2081"
+    },
+    "id": "alfakynz.sync-dash",
+    "name": "Sync Dash",
+    "version": "v0.0.1",
+    "developer": "Alfakynz",
+    "description": "Sync your mods between all your devices",
+    "dependencies": {
+        "geode.node-ids": ">=v1.20.0"
+    }
+}

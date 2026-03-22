@@ -1,0 +1,15 @@
+{
+    "name": "My Modpack",
+    "version": "1.0.0",
+    "gameVersion": "2.2081",
+    "mods": [
+        {
+            "id": "geode.node-ids",
+            "version": "1.20.0"
+        },
+        {
+            "id": "some.mod",
+            "version": "1.3.2"
+        }
+    ]
+}

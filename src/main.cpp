@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 
-#include "SDLayer.hpp"
+#include "../include/SDLayer.hpp"
 
 using namespace geode::prelude;
 

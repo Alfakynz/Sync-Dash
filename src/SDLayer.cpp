@@ -1,10 +1,10 @@
-#include "SDLayer.hpp"
+#include "../include/SDLayer.hpp"
 
 #include <Geode/cocos/cocoa/CCObject.h>
 #include <Geode/cocos/menu_nodes/CCMenuItem.h>
 #include <Geode/loader/Dirs.hpp>
 
-#include "export.hpp"
+#include "../include/export.hpp"
 
 using namespace geode::prelude;
 

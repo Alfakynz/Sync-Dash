@@ -1,9 +1,11 @@
 #include "export.hpp"
 
+#include <fstream>
+
 #include <Geode/loader/Loader.hpp>
 #include <Geode/loader/Mod.hpp>
+
 #include <matjson.hpp>
-#include <fstream>
 
 using namespace geode::prelude;
 

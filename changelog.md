@@ -6,3 +6,4 @@
 - Added a custom layer to view the button
 - Added a button to show the layer (right to the Geode button)
 - Added a button to import mods (not implemented yet)
+- Updated the default exported file location, now in `modpacks/`

@@ -1,6 +1,7 @@
 #include "../include/export.hpp"
 
 #include <fstream>
+#include <filesystem>
 
 #include <Geode/loader/Loader.hpp>
 #include <Geode/loader/Mod.hpp>
@@ -31,17 +32,28 @@ matjson::Value exportMods() {
     return root;
 }
 
-void saveModsToFile(const std::string& path) {
+bool saveModsToFile(const std::string& path) {
     auto json = exportMods();
 
-    std::ofstream file(path);
-    if (!file.is_open()) {
-        log::error("Failed to open file: {}", path);
-        return;
+    try {
+        std::filesystem::path fsPath(path);
+        // Create directories if they don't exist
+        std::filesystem::create_directories(fsPath.parent_path());
+
+        std::ofstream file(path);
+        if (!file.is_open()) {
+            log::error("Failed to open file: {}", path);
+            return false;
+        }
+
+        file << json.dump(4);
+        file.close();
+
+        log::info("Exported modpack to {}", path);
+        return true;
     }
-
-    file << json.dump(4);
-    file.close();
-
-    log::info("Exported modpack to {}", path);
+    catch (const std::exception& e) {
+        log::error("Exception while exporting modpack: {}", e.what());
+        return false;
+    }
 }

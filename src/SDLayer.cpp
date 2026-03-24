@@ -30,7 +30,7 @@ bool SDLayer::init() {
     auto bg = CCSprite::create("GJ_gradientBG.png");
 
     bg->setPosition({ winSize.width / 2, winSize.height / 2 });
-    
+
     // Scale to cover screen
     bg->setScaleX(winSize.width / bg->getContentSize().width);
     bg->setScaleY(winSize.height / bg->getContentSize().height);
@@ -78,14 +78,22 @@ void SDLayer::onBack(CCObject*) {
 }
 
 void SDLayer::onExport(CCObject*) {
-    auto path = (geode::dirs::getGeodeDir() / "modpack.json").string();
-    saveModsToFile(path);
+    auto path = (geode::dirs::getGeodeDir() / "modpacks" / "modpack.json").string();
+    bool success = saveModsToFile(path);
 
-    FLAlertLayer::create(
-        "Export",
-        "Modpack exported successfully!",
-        "OK"
-    )->show();
+    if (success) {
+        FLAlertLayer::create(
+            "Export",
+            "Modpack exported successfully!",
+            "OK"
+        )->show();
+    } else {
+        FLAlertLayer::create(
+            "Export Failed",
+            "Failed to export modpack. Check logs for details.",
+            "OK"
+        )->show();
+    }
 }
 
 void SDLayer::onImport(CCObject*) {

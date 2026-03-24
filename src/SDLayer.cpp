@@ -56,15 +56,25 @@ bool SDLayer::init() {
     auto exportButton = CCMenuItemSpriteExtra::create(exportSprite, this, menu_selector(SDLayer::onExport));
     exportButton->setPosition({ 0, 50 });
 
+    // Import button
+    auto importSprite = ButtonSprite::create("Import Modpack", "goldFont.fnt", "GJ_button_01.png");
+    auto importButton = CCMenuItemSpriteExtra::create(importSprite, this, menu_selector(SDLayer::onImport));
+    importButton->setPosition({ 0, 0 });
+
     // Menu
-    auto menu = CCMenu::create(exportButton, nullptr);
+    auto menu = CCMenu::create(exportButton, importButton, nullptr);
     menu->setPosition({ winSize.width / 2, winSize.height / 2 });
+    menu->updateLayout();
 
     this->addChild(title);
     this->addChild(menuBack);
     this->addChild(menu);
 
     return true;
+}
+
+void SDLayer::onBack(CCObject*) {
+    CCDirector::sharedDirector()->popSceneWithTransition(0.4f, PopTransition::kPopTransitionFade);
 }
 
 void SDLayer::onExport(CCObject*) {
@@ -78,8 +88,12 @@ void SDLayer::onExport(CCObject*) {
     )->show();
 }
 
-void SDLayer::onBack(CCObject*) {
-    CCDirector::sharedDirector()->popSceneWithTransition(0.4f, PopTransition::kPopTransitionFade);
+void SDLayer::onImport(CCObject*) {
+    FLAlertLayer::create(
+        "Import",
+        "Importing modpacks is not implemented yet.",
+        "OK"
+    )->show();
 }
 
 // ESC key support

@@ -7,8 +7,9 @@ public:
     static SDLayer* create();
     bool init();
 
-    void onExport(cocos2d::CCObject*);
     void onBack(cocos2d::CCObject*);
+    void onExport(cocos2d::CCObject*);
+    void onImport(cocos2d::CCObject*);
 
     virtual void keyBackClicked();
 };

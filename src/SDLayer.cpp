@@ -5,6 +5,7 @@
 #include <Geode/loader/Dirs.hpp>
 
 #include "../include/export.hpp"
+#include "../include/InputLayer.hpp"
 
 using namespace geode::prelude;
 
@@ -78,23 +79,45 @@ void SDLayer::onBack(CCObject*) {
 }
 
 void SDLayer::onExport(CCObject*) {
-    auto path = (geode::dirs::getGeodeDir() / "modpacks" / "modpack.json").string();
-    bool success = saveModsToFile(path);
+    // Create a dialog to ask for modpack name and version
+    auto inputLayer = InputLayer::create(
+        "Export Modpack",
+        "Enter the modpack name and version:",
+        "Name",
+        "Version",
+        [this](std::string name, std::string version) {
+            // Callback when the user confirms the input
+            if (name.empty() || version.empty()) {
+                FLAlertLayer::create(
+                    "Error",
+                    "Name and version cannot be empty.",
+                    "OK"
+                )->show();
+                return;
+            }
 
-    if (success) {
-        FLAlertLayer::create(
-            "Export",
-            "Modpack exported successfully!",
-            "OK"
-        )->show();
-    } else {
-        FLAlertLayer::create(
-            "Export Failed",
-            "Failed to export modpack. Check logs for details.",
-            "OK"
-        )->show();
-    }
+            bool success = exportMods(name, version);
+
+            if (success) {
+                FLAlertLayer::create(
+                    "Export",
+                    "Modpack exported successfully!",
+                    "OK"
+                )->show();
+            } else {
+                FLAlertLayer::create(
+                    "Export Failed",
+                    "Failed to export modpack. Check logs for details.",
+                    "OK"
+                )->show();
+            }
+        }
+    );
+
+    // Show the input layer
+    inputLayer->show();
 }
+
 
 void SDLayer::onImport(CCObject*) {
     FLAlertLayer::create(

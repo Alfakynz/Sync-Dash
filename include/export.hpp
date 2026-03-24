@@ -1,4 +1,4 @@
 #pragma once
 #include <string>
 
-bool saveModsToFile(const std::string& path);
+bool exportMods(std::string name, std::string version);

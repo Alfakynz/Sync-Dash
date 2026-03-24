@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <filesystem>
+#include <string>
 
 #include <Geode/loader/Loader.hpp>
 #include <Geode/loader/Mod.hpp>
@@ -10,7 +11,7 @@
 
 using namespace geode::prelude;
 
-matjson::Value exportMods() {
+matjson::Value getMods(std::string name, std::string version) {
     auto modsArray = matjson::Value::array();
 
     for (auto mod : Loader::get()->getAllMods()) {
@@ -24,17 +25,15 @@ matjson::Value exportMods() {
     }
 
     auto root = matjson::Value::object();
-    root["name"] = "My Modpack";
-    root["version"] = "1.0.0";
+    root["name"] = name;
+    root["version"] = version;
     root["gameVersion"] = Loader::get()->getGameVersion();
     root["mods"] = modsArray;
 
     return root;
 }
 
-bool saveModsToFile(const std::string& path) {
-    auto json = exportMods();
-
+bool saveModsToFile(auto json, const std::string& path) {
     try {
         std::filesystem::path fsPath(path);
         // Create directories if they don't exist
@@ -56,4 +55,10 @@ bool saveModsToFile(const std::string& path) {
         log::error("Exception while exporting modpack: {}", e.what());
         return false;
     }
+}
+
+bool exportMods(std::string name, std::string version) {
+    auto json = getMods(name, version);
+    auto path = (geode::dirs::getGeodeDir() / "modpacks" / (name + ".json")).string();
+    return saveModsToFile(json, path);
 }
